@@ -2,7 +2,13 @@ import express, { NextFunction, Request, Response } from "express";
 import { jwtSecret, validateToken } from "@repo/backend-common/index.ts";
 import { signInSchema, signUpSchema } from "@repo/common/types.ts";
 import { prismaClient } from "@repo/db/db.ts";
+import cors from "cors";
 const app = express();
+
+app.use(cors({
+  origin:'*',
+  allowedHeaders:"*",
+}));
 
 app.get("/", (req: Request, res: Response) => {
   res.json("All good");
@@ -63,7 +69,7 @@ async function authMiddleware(req: Request, res: Response, next: NextFunction) {
     if (typeof userId !== "string") {
       throw new Error("s Invalid user ");
     }
-   
+
     //@ts-ignore
     req.userId = userId;
 
@@ -81,7 +87,6 @@ app.post(
     //@ts-ignore
     const userId = req.userId;
 
-    
     try {
       if (!slug || !userId) {
         res.json("Invalid data");
