@@ -2,8 +2,9 @@ import React from "react";
 import { getMessages } from "../action/room";
 import MessageComponent from "./messageComponent";
 
-async function RoomComponent({ roomId }: { roomId: string }) {
+async function RoomComponent({ roomId }: { roomId: number }) {
   const messages = await getMessages(roomId);
+  console.log("🚀 ~ RoomComponent ~ messages:", messages);
 
   if (!messages) {
     return (
@@ -16,7 +17,7 @@ async function RoomComponent({ roomId }: { roomId: string }) {
   }
   return (
     <div>
-      <MessageComponent chat={messages} />
+      <MessageComponent chat={messages} roomId={roomId} />
     </div>
   );
 }

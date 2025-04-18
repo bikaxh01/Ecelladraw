@@ -9,12 +9,12 @@ export function useSocket() {
   const [loading, setLoading] = useState<boolean>(true);
   const [socket, setSocket] = useState<WebSocket>();
   useEffect(() => {
-    const ws = new WebSocket(websocketBackend);
+    const ws = new WebSocket(`${websocketBackend}?token=bikash`);
     ws.onopen = () => {
       setLoading(false);
       setSocket(ws);
     };
-  });
+  },[]);
 
   return {
     loading,

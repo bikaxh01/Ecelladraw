@@ -4,7 +4,7 @@ import { prismaClient } from "@repo/db/db.ts";
 
 
 export async function getRoomId(slug: string): Promise<any | null> {
-  console.log("🚀 ~ getRoomId ~ slug:", slug)
+  
   
   try {
     const room = await prismaClient.room.findFirst({
@@ -12,8 +12,7 @@ export async function getRoomId(slug: string): Promise<any | null> {
         slug: slug,
       },
     });
-    console.log("🚀 ~ getRoomId ~ room:", room);
-
+   
     return room;
   } catch (error) {
     console.log("🚀 ~ getRoomId ~ error:", error)
@@ -21,7 +20,7 @@ export async function getRoomId(slug: string): Promise<any | null> {
   }
 }
 
-export async function getMessages(roomId: string): Promise<any[] | null> {
+export async function getMessages(roomId: number): Promise<any[] | null> {
   try {
     const messages = await prismaClient.chat.findMany({
       where: {

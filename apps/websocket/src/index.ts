@@ -5,12 +5,12 @@ const wss = new WebSocketServer({ port: 9000 });
 interface User {
   userId: string;
   ws: WebSocket;
-  rooms: string[];
+  rooms: number[];
 }
 
 interface MessageType {
   type: "join_room" | "leave_room" | "chat";
-  roomId: string;
+  roomId: number;
   message?: string;
 }
 
@@ -44,17 +44,17 @@ wss.on("connection", function connection(ws, request) {
 
   ws.on("message", function message(data) {
     const stringData = data.toString();
-  
-    const { type, roomId, message }: MessageType = JSON.parse(stringData);
 
+    let { type, roomId, message }: MessageType = JSON.parse(stringData);
+    roomId = Number(roomId);
     if (type == "join_room") {
       const user = users.find((user) => user.ws === ws);
       if (!user) {
         return;
-
       }
       user.rooms.push(roomId);
-     
+
+      console.log(users);
     }
 
     if (type == "leave_room") {
@@ -63,13 +63,10 @@ wss.on("connection", function connection(ws, request) {
         return;
       }
       user.rooms = user.rooms.filter((room) => room !== roomId);
-     
     }
 
     if (type === "chat") {
-
       //TODO: push to queue save to DB
-
 
       users.forEach((user) => {
         if (user.rooms.includes(roomId) && user.userId !== userId) {
@@ -84,5 +81,5 @@ wss.on("connection", function connection(ws, request) {
     // ws.send("Kya halchal");
   });
 
-  ws.send("something");
+  // ws.send("something");
 });
