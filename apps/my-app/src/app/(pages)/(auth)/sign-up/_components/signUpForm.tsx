@@ -3,24 +3,21 @@ import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { primaryBackend } from "@repo/backend-common/index.ts";
 import { useRouter } from "next/navigation";
+
 function SignUpForm() {
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const router = useRouter();
-
+  const router = useRouter()
   const handleSignUp = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:5000/`, {
-        email,
-        password,
-      });
+      const res = await axios.get(`${primaryBackend}`);
       router.push("/sign-in");
       alert("Created successfully");
     } catch (error) {
+      console.log("🚀 ~ handleSignUp ~ error:", error)
       alert("something went wrong");
     }
   };

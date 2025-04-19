@@ -3,14 +3,21 @@ import { jwtSecret, validateToken } from "@repo/backend-common/index.ts";
 import { signInSchema, signUpSchema } from "@repo/common/types.ts";
 import { prismaClient } from "@repo/db/db.ts";
 import cors from "cors";
+
+
 const app = express();
 
-app.use(cors({
-  origin:'*',
-  allowedHeaders:"*",
-}));
+// const corsOptions ={
+//   origin:'http://localhost:3000', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200
+// }
+
+ app.use(cors());
+
 
 app.get("/", (req: Request, res: Response) => {
+
   res.json("All good");
 });
 
@@ -155,5 +162,7 @@ app.get("/get-chats", async (req: Request, res: Response) => {
   }
 });
 
-const PORT = 5000;
+const PORT = 3004;
+
+
 app.listen(PORT, () => console.log(`HTTP server running at ${PORT}`));

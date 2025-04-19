@@ -1,10 +1,18 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Main() {
   const [slug, setSlug] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    async function check() {
+      const res = await fetch("http://localhost:3004",{method:"GET"});
+      console.log("🚀 ~ check ~ res:", res)
+    }
+    check()
+  }, []);
 
   const handleJoinRoom = () => {
     router.push(`room/${slug}`);
@@ -16,7 +24,7 @@ function Main() {
           type="text"
           className=" h-[2rem] w-[8rem] border text-white rounded-md p-2
         "
-        onChange={(e)=>setSlug(e.target.value)}
+          onChange={(e) => setSlug(e.target.value)}
         />
         <button
           onClick={handleJoinRoom}

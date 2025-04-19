@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const jwtSecret = process.env.JWT_SECRET || "secret";
 
-export const primaryBackend = 'http://localhost:5000'
+export const primaryBackend = 'http://localhost:3004'
 export const websocketBackend = 'ws://localhost:9000'
 
 export async function validateToken(token: string): Promise<string | Error> {
